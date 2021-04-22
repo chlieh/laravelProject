@@ -5,9 +5,10 @@ $(function(e) {
 		buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
 		responsive: true,
 		language: {
-			searchPlaceholder: 'Search...',
-			sSearch: '',
-			lengthMenu: '_MENU_ ',
+			 searchPlaceholder: 'Search...',
+			 sSearch: '',
+			 lengthMenu: '_MENU_ ',
+			
 		}
 	});
 	table.buttons().container()
@@ -18,6 +19,7 @@ $(function(e) {
 			searchPlaceholder: 'Search...',
 			sSearch: '',
 			lengthMenu: '_MENU_',
+			"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
 		}
 	});
 	$('#example2').DataTable({

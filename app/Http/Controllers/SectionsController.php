@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\sectionValidation;
 use App\sections;
 use illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -15,7 +16,9 @@ class SectionsController extends Controller
      */
     public function index()
     {
-        return view('sections.section');
+
+        $sections = sections::all();
+        return view('sections.section', compact('sections'));
     }
 
     /**
@@ -34,26 +37,27 @@ class SectionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(sectionValidation $request)
     {
 
-        $input = $request->all();
-        $existeSection = sections::where('section_name', '=', $input['section_name'])->exists();
+        //         $input = $request->all();
+        //         $existeSection = sections::where('section_name', '=', $input['section_name'])->exists();
 
-        if ($existeSection) {
-            session()->flash('Error', 'Error : Nom de section déja existe');
-            return redirect('/sections');
-        } else {
+        //         if ($existeSection) {
+        //             session()->flash('Error', 'Error : Nom de section déja existe');
+        //             return redirect('/sections');
+        //         } else {
+        // session()->flash('Add', 'Section ajouter avec succés');
+        //             return redirect('/sections');
+        //         }
 
-            sections::create([
-                'section_name' => $request->section_name,
-                'description' => $request->description,
-                'created_by' => (Auth::user()->name),
-            ]);
-
-            session()->flash('Add', 'Section ajouter avec succés');
-            return redirect('/sections');
-        }
+        $validated = $request->validated();
+        sections::create([
+            'section_name' => $request->section_name,
+            'description' => $request->description,
+            'created_by' => (Auth::user()->name),
+        ]);
+        return redirect('/sections');
     }
 
     /**
@@ -85,9 +89,33 @@ class SectionsController extends Controller
      * @param  \App\sections  $sections
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, sections $sections)
+    public function update(request $request, sections $sections)
     {
-        //
+        // $validated = $request->validated();
+
+        $request->validate(
+            [
+                'section_name' => 'required|max:255|unique:sections,section_name,' . $request->id,
+                'description' => 'required',
+            ],
+            [
+                'section_name.unique' => "Nom deja pris",
+            ]
+        );
+
+        $input = $request->all();
+
+        $section = sections::find($input['id']);
+
+        // $section->section_name = $input['section_name'];
+        // $section->description = $input['description'];
+        // $section->save();
+        $section->update([
+            'section_name' => $request->section_name,
+            'description' => $request->description,
+        ]);
+        session()->flash('edit', 'Modifier avec succés');
+        return redirect('/sections');
     }
 
     /**
@@ -96,8 +124,12 @@ class SectionsController extends Controller
      * @param  \App\sections  $sections
      * @return \Illuminate\Http\Response
      */
-    public function destroy(sections $sections)
+    public function destroy(Request $request)
     {
-        //
+
+        sections::find($request->id)->delete();
+        // $section->delete();
+        session()->flash('delete', 'Supprimer avec succes');
+        return redirect('/sections');
     }
 }
