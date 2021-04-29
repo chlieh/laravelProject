@@ -14,6 +14,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function index()
     {
         $sections = sections::all();
@@ -80,8 +87,10 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request)
     {
+
+
         $request->validate(
             [
                 'product_name' => 'required|max:255|unique:products,product_name,' . $request->id,
@@ -91,6 +100,7 @@ class ProductController extends Controller
                 'product_name.unique' => 'Produit existe déja',
             ]
         );
+
         $product = product::find($request->id);
         $product->update([
             'product_name' => $request->product_name,
@@ -98,7 +108,7 @@ class ProductController extends Controller
             'description' => $request->description,
         ]);
         session()->flash('updated', 'Produit modifié avec succés');
-        return redirect('/products');
+        return back();
     }
 
     /**

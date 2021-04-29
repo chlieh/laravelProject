@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\invoices;
+use App\sections;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class InvoicesController extends Controller
@@ -12,6 +14,12 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('invoices.invoices');
@@ -24,7 +32,8 @@ class InvoicesController extends Controller
      */
     public function create()
     {
-        //
+        $sections = sections::All();
+        return view('invoices.create', compact('sections'));
     }
 
     /**
@@ -81,5 +90,11 @@ class InvoicesController extends Controller
     public function destroy(invoices $invoices)
     {
         //
+    }
+
+    public function getProducts($id)
+    {
+
+        $products = DB::table('products');
     }
 }
