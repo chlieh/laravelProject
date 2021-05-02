@@ -57,13 +57,13 @@
                             </div>
 
                             <div class="col">
-                                <label>تاريخ الفاتورة</label>
+                                <label> Date Facture</label>
                                 <input class="form-control fc-datepicker" name="invoice_Date" placeholder="YYYY-MM-DD"
                                     type="text" value="{{ date('Y-m-d') }}" required>
                             </div>
 
                             <div class="col">
-                                <label>تاريخ الاستحقاق</label>
+                                <label> Date de paiement</label>
                                 <input class="form-control fc-datepicker" name="Due_date" placeholder="YYYY-MM-DD"
                                     type="text" required>
                             </div>
@@ -73,11 +73,11 @@
                         {{-- 2 --}}
                         <div class="row">
                             <div class="col">
-                                <label for="inputName" class="control-label">القسم</label>
+                                <label for="inputName" class="control-label">Sections</label>
                                 <select name="Section" class="form-control SlectBox" onclick="console.log($(this).val())"
                                     onchange="console.log('change is firing')">
                                     <!--placeholder-->
-                                    <option value="" selected disabled>حدد القسم</option>
+                                    <option value="" selected disabled>Sélectionner une section </option>
                                     @foreach ($sections as $section)
                                         <option value="{{ $section->id }}"> {{ $section->section_name }}</option>
                                     @endforeach
@@ -85,13 +85,13 @@
                             </div>
 
                             <div class="col">
-                                <label for="inputName" class="control-label">المنتج</label>
+                                <label for="inputName" class="control-label">Produit</label>
                                 <select id="product" name="product" class="form-control">
                                 </select>
                             </div>
 
                             <div class="col">
-                                <label for="inputName" class="control-label">مبلغ التحصيل</label>
+                                <label for="inputName" class="control-label"> Total à payer</label>
                                 <input type="text" class="form-control" id="inputName" name="Amount_collection"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                             </div>
@@ -103,7 +103,7 @@
                         <div class="row">
 
                             <div class="col">
-                                <label for="inputName" class="control-label">مبلغ العمولة</label>
+                                <label for="inputName" class="control-label"> Coupon</label>
                                 <input type="text" class="form-control form-control-lg" id="Amount_Commission"
                                     name="Amount_Commission" title="يرجي ادخال مبلغ العمولة "
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -111,7 +111,7 @@
                             </div>
 
                             <div class="col">
-                                <label for="inputName" class="control-label">الخصم</label>
+                                <label for="inputName" class="control-label">Remise</label>
                                 <input type="text" class="form-control form-control-lg" id="Discount" name="Discount"
                                     title="يرجي ادخال مبلغ الخصم "
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -119,10 +119,10 @@
                             </div>
 
                             <div class="col">
-                                <label for="inputName" class="control-label">نسبة ضريبة القيمة المضافة</label>
+                                <label for="inputName" class="control-label"> TVA </label>
                                 <select name="Rate_VAT" id="Rate_VAT" class="form-control" onchange="myFunction()">
                                     <!--placeholder-->
-                                    <option value="" selected disabled>حدد نسبة الضريبة</option>
+                                    <option value="" selected disabled>TVA </option>
                                     <option value=" 5%">5%</option>
                                     <option value="10%">10%</option>
                                 </select>
